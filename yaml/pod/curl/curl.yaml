@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: curl
+  name: curl
+spec:
+  containers:
+  - args:
+    - sh
+    image: curlimages/curl
+    imagePullPolicy: Always
+    name: curl
+  restartPolicy: Always

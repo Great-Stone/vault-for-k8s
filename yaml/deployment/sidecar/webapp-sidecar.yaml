@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: webapp-sidecar
+labels:
+   app: issues
+spec:
+selector:
+   matchLabels:
+      app: issues
+replicas: 1
+template:
+   metadata:
+      annotations:
+      vault.hashicorp.com/agent-inject: 'true'
+      vault.hashicorp.com/agent-inject-status: 'update'
+      vault.hashicorp.com/role: 'example-role'
+      vault.hashicorp.com/agent-inject-secret-database-config.txt: 'kvv2/data/secret'
+      vault.hashicorp.com/agent-inject-template-database-config.txt: |
+         {{- with secret "kvv2/data/secret" -}}
+         postgresql://{{ .Data.data.username }}:{{ .Data.data.password }}@postgres:5432/wizard
+         {{- end -}}
+      labels:
+      app: issues
+   spec:
+      serviceAccountName: webapp-sa
+      containers:
+      - name: webapp
+         image: jweissig/app:0.0.1

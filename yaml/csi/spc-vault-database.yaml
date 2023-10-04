@@ -1,0 +1,13 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: vault-secret
+spec:
+  provider: vault
+  parameters:
+    vaultAddress: "http://host.minikube.internal:8200"
+    roleName: "role1"
+    objects: |
+      - objectName: "my-password"
+        secretPath: "kvv2/data/secret"
+        secretKey: "password"
