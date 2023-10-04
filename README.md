@@ -1,9 +1,10 @@
-# Vault for K8S
+# Vault for K8S (Terraform Provisioning)
 
 This Terraform code identifies three cases for integrating Vault into Kubernets.
 
 ## Tested environment
 - macOS
+- terraform v1.5.7
 - vault v1.15.0
 - helm v3.12.1
 - kubectl v5.0.1
